@@ -33,6 +33,8 @@ export default tseslint.config(
         "error",
         { checksVoidReturn: { attributes: false } },
       ],
+      "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
+      "@typescript-eslint/no-explicit-any": "warn",
     },
   },
   {
