@@ -6,8 +6,14 @@ import { companiesTable, NewCompany } from "@/server/db/schema"
 import { eq } from "drizzle-orm"
 
 export async function getCompanies() {
-  return await db.select().from(companiesTable)
+  return await db.select().from(companiesTable);
 }
+
+export async function getCompanyById(id:number) {
+  const [company] = await db.select().from(companiesTable).where(eq(companiesTable.id, id));
+  return company;
+}
+
 
 export async function getCompany(id: string) {
   // Ensure id is treated as a number if your schema id is serial

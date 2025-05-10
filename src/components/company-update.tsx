@@ -5,10 +5,11 @@ import { updateCompany } from "../server/services/company.service"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { useFormStatus } from "react-dom"
-import { Pencil } from "lucide-react"
 import { toast } from "sonner"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 type Company = {
   id: number
@@ -26,8 +27,8 @@ function SubmitButton() {
 }
 
 export function CompanyUpdate({ company }: { company: Company }) {
-  const [open, setOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   async function handleUpdateCompany(formData: FormData) {
     setError(null)
@@ -37,41 +38,41 @@ export function CompanyUpdate({ company }: { company: Company }) {
       setError(result.error)
     } else {
       toast.success("Company updated successfully")
-      setOpen(false)
+      router.push("/companies")
     }
   }
 
+  if (!company) {
+    return <p>Company not found.</p>
+  }
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Pencil className="h-4 w-4" />
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Update Company</DialogTitle>
-        </DialogHeader>
-        <form action={handleUpdateCompany}>
-          <div className="space-y-4 py-4">
-            <input type="hidden" name="id" value={company.id} />
-            <div className="space-y-2">
-              <Label htmlFor={`name-${company.id}`}>Company Name</Label>
-              <Input
-                id={`name-${company.id}`}
-                name="name"
-                defaultValue={company.name}
-                placeholder="Enter company name"
-                required
-              />
-            </div>
-            {error && <p className="text-sm text-red-500">{error}</p>}
+    <Card className="w-full max-w-md mx-auto">
+      <CardHeader>
+        <CardTitle>Update Company</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form action={handleUpdateCompany} className="space-y-6">
+          <input type="hidden" name="id" value={company.id} />
+          <div className="space-y-2">
+            <Label htmlFor={`name-${company.id}`}>Company Name</Label>
+            <Input
+              id={`name-${company.id}`}
+              name="name"
+              defaultValue={company.name}
+              placeholder="Enter company name"
+              required
+            />
           </div>
-          <div className="flex justify-end">
+          {error && <p className="text-sm text-red-500">{error}</p>}
+          <div className="flex justify-between">
             <SubmitButton />
+            <Button variant="outline" asChild>
+              <Link href="/companies">Cancel</Link>
+            </Button>
           </div>
         </form>
-      </DialogContent>
-    </Dialog>
+      </CardContent>
+    </Card>
   )
 }

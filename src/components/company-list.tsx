@@ -1,6 +1,5 @@
 import { getCompanies } from "../server/services/company.service"
 import { CompanyDelete } from "./company-delete"
-import { CompanyUpdate } from "./company-update"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -25,7 +24,9 @@ export async function CompanyList() {
               <div key={company.id} className="flex items-center justify-between p-4 border rounded-md">
                 <span className="font-medium">{company.name}</span>
                 <div className="flex space-x-2">
-                  <CompanyUpdate company={company} />
+                  <Button asChild variant="outline">
+                    <Link href={`/companies/update/${company.id}`}>Update</Link>
+                  </Button>
                   <CompanyDelete company={company} />
                 </div>
               </div>

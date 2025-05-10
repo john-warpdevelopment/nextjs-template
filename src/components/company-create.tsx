@@ -9,6 +9,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { useFormStatus } from "react-dom"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 function SubmitButton() {
   const { pending } = useFormStatus()
@@ -34,7 +35,9 @@ export function CompanyCreate() {
       toast.success("Company created successfully")
       // Reset the form
       const form = document.getElementById("create-form") as HTMLFormElement
-      form.reset()
+      if (form) {
+        form.reset()
+      }
       router.push("/companies")
     }
   }
@@ -54,8 +57,11 @@ export function CompanyCreate() {
             {error && <p className="text-sm text-red-500">{error}</p>}
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex justify-between">
           <SubmitButton />
+          <Button variant="outline" asChild>
+            <Link href="/companies">Cancel</Link>
+          </Button>
         </CardFooter>
       </form>
     </Card>
