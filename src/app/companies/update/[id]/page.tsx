@@ -7,13 +7,13 @@ export default async function UpdateCompanyPage({ params }: { params: { id: stri
   const companyId = parseInt(id, 10);
 
   if (isNaN(companyId)) {
-    notFound(); // If id is not a number, render 404
+    notFound();
   }
 
   const company = await getCompanyById(companyId);
 
   if (!company) {
-    notFound(); // If company is not found, render 404
+    notFound(); 
   }
 
   return (
