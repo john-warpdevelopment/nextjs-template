@@ -33,8 +33,8 @@ export default tseslint.config(
         "error",
         { checksVoidReturn: { attributes: false } },
       ],
-      "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
-      "@typescript-eslint/no-explicit-any": "warn",
+      "@/comma-dangle": ["error", "always-multiline"],
+      "@typescript-eslint/no-explicit-any": "error",
       "sort-imports": ["warn", {
         "ignoreCase": false,
         "ignoreDeclarationSort": false,
@@ -50,7 +50,9 @@ export default tseslint.config(
     },
     languageOptions: {
       parserOptions: {
+        project: true,
         projectService: true,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
   },

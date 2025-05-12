@@ -1,49 +1,50 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { updateCompany } from "../server/services/company.service"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useFormStatus } from "react-dom"
-import { toast } from "sonner"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
+import { useState } from "react";
+import { updateCompany } from "../server/services/company.service";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useFormStatus } from "react-dom";
+import { toast } from "sonner";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Company = {
-  id: number
-  name: string
-}
+  id: number;
+  name: string;
+};
 
 function SubmitButton() {
-  const { pending } = useFormStatus()
+  const { pending } = useFormStatus();
 
   return (
     <Button type="submit" disabled={pending}>
       {pending ? "Updating..." : "Update Company"}
     </Button>
-  )
+  );
 }
 
 export function CompanyUpdate({ company }: { company: Company }) {
-  const [error, setError] = useState<string | null>(null)
-  const router = useRouter()
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const test:any = 'asda';
 
   async function handleUpdateCompany(formData: FormData) {
-    setError(null)
-    const result = await updateCompany(formData)
+    setError(null);
+    const result = await updateCompany(formData);
 
     if (result.error) {
-      setError(result.error)
+      setError(result.error);
     } else {
-      toast.success("Company updated successfully")
-      router.push("/companies")
+      toast.success("Company updated successfully");
+      router.push("/companies");
     }
   }
 
   if (!company) {
-    return <p>Company not found.</p>
+    return <p>Company not found.</p>;
   }
 
   return (
@@ -74,5 +75,5 @@ export function CompanyUpdate({ company }: { company: Company }) {
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }

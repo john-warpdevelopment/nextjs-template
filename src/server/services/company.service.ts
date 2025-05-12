@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { db } from "@/server/db";
-import { companiesTable, NewCompany } from "@/server/db/schema";
+import { companiesTable, NewCompany } from "@/server/db/schema/companies";
 import { eq } from "drizzle-orm";
 
 export async function getCompanies() {
