@@ -1,9 +1,13 @@
 import * as React from "react";
 import { CompanyList } from "../../components/company-list";
+import { getCompanies } from "@/server/services/company.service";
 
 
-export default function Home() {
+export default async function Home() {
+  
+  const companies = await getCompanies()
+
   return (
-    <CompanyList />
+    <CompanyList companies={companies}  />
   );
 }
